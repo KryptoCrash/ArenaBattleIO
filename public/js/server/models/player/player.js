@@ -1,21 +1,20 @@
-export default class Player {
-    
+module.exports =  class Player {
+
     constructor(id, x, y, hero, angle) {
-        super(id,x,y,hero,angle);
+        
     }
 
-    static onConnect(io, socket){
-        var player;
+    static onConnect(io, socket) {
         socket.join(room);
         room = socket.room;
     }
-    
-    static onMove(){
+
+    static onMove(x, y, id) {
 
     }
-    
-    static onDisconnect(io, socket){
-        
+
+    static onDisconnect(io, socket) {
+
     }
 }
 
