@@ -17,4 +17,4 @@ Be specific!
 "Your game lacks decent graphics, the movement mechanics suck, there's tons of lag, it eats up memory like you developers 
 eat document.cookies, and it gives a trash user experience."
 
-Thank you! =D
+Thank you!
