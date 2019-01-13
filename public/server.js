@@ -3,10 +3,14 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 var Player = require('./js/server/models/player/player')
-app.use(express.static(__dirname + './public/js/client'));
+var Bundler = require('parcel-bundler');
+var path = require('path');
+const bundler = new Bundler(path.resolve(__dirname, './js/client/index.html'));
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/js/index.html');
+app.use(bundler.middleware());
+
+server.listen(8000, () => {
+    console.log(`App now listening on port 8000`);
 });
 
 io.on('connect', (socket) => {
@@ -22,10 +26,3 @@ io.on('connect', (socket) => {
     })
 })
 
-app.listen(8080, () => {
-    console.log('starting...')
-})
-//Hello
-//If I join in my PC I will also be able to talk, rn on my Laptop
-//not exactly sure what im doing here, but im trying to set up the player. 
-//k

@@ -1,7 +1,7 @@
 module.exports =  class Player {
 
     constructor(id, x, y, hero, angle) {
-        
+        this.id=id
     }
 
     static onConnect(io, socket) {
