@@ -18,10 +18,12 @@ module.exports =  class Player {
     }
 }
 
-/*The player will be on a randomly generated point, given that the point is not in/near existing objects such as other play
-WIbOnce that happens, moving will be done client side, and sent over. We will ceheck if moving lsuch movement is valid,
-and if not, bakithe player will be kicked. Each movement will be sent with a tiemestamp. If the player can move 5 units
-per second, and the client tells us it moved 10 units in a second, we can kick them without worry.
+/*UPDATE:
+We are going to be unhackable.
+The client will not be able to hack anything, but will purely be a screen for showing things.
+EVERYTHING will be done server side. This includes movement, player position, and HP.
 
-If they disconnect, their data will be deleted, the socket will be closeomed, and we'll update everybody else.
-Every tick updates other players of users within viewing distance, preventing world map viewing*/
+The only thing the client will do is show the data effectively, and send user input.
+Anything else sent by the user is anthrax! Don't touch it!
+Even the user input might be anthrax! Make sure to sanitize anything and everything.
+*/
