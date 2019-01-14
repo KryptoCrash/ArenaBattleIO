@@ -4,7 +4,8 @@ export default class Game extends Phaser.Scene {
         super('Game')
     }
     preload() {
-       // this.image.load('player', 'trashy artwork.svg')
+       this.load.svg('player', 'Character.svg')
+        this.load.start();
     }
     create() {
         var player = this.physics.add.sprite(300,300,'player');
