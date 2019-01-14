@@ -143,20 +143,15 @@ function (_Phaser$Scene) {
 
   _createClass(Menu, [{
     key: "preload",
-    value: function preload() {
-      this.load.image('start', "");
-    }
+    value: function preload() {}
   }, {
     key: "create",
     value: function create() {
-      var _this = this;
-
-      var startButton = this.add.sprite(400, 400, 'start').setInteractive();
-      startButton.on('pointerDown', function () {
-        _this.cameras.main.fade();
-
-        _this.scene.start('Game');
-      });
+      /* var startButton = this.add.sprite(400, 400, 'start').setInteractive()
+       startButton.on('pointerDown', () => {
+           this.cameras.main.fade()
+          // this.scene.start('Game')
+       })*/
     }
   }, {
     key: "update",
@@ -206,13 +201,16 @@ function (_Phaser$Scene) {
 
   _createClass(Game, [{
     key: "preload",
-    value: function preload() {// this.image.load('player', 'trashy artwork.svg')
+    value: function preload() {
+      this.load.svg('background', 'Character_Hand.svg');
+      this.load.svg('player', 'Character.svg');
     }
   }, {
     key: "create",
     value: function create() {
       var _this = this;
 
+      var background = this.physics.add.sprite(0, 0, 'background');
       var player = this.physics.add.sprite(300, 300, 'player');
       var cammy = this.cameras.main;
       cammy.startFollow(player);
@@ -251,7 +249,7 @@ var config = {
   scene: [_Game.default, _Menu.default]
 };
 var game = new Phaser.Game(config);
-},{"./exports/scenes/Menu":"exports/scenes/Menu.js","./exports/scenes/Game":"exports/scenes/Game.js"}],"../../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./exports/scenes/Menu":"exports/scenes/Menu.js","./exports/scenes/Game":"exports/scenes/Game.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -278,7 +276,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54976" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51656" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
@@ -420,5 +418,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},["../../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
 //# sourceMappingURL=/main.1f19ae8e.map
