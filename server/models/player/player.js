@@ -1,20 +1,18 @@
 module.exports =  class Player {
-
-    constructor(id, x, y, hero, angle) {
-        this.id=id
+    constructor(id,x,y){
+        this.x = x;
+        this.y = y;
+        this.id = id;
     }
-
     static onConnect(io, socket) {
-        socket.join(room);
-        room = socket.room;
-    }
-
-    static onMove(x, y, id) {
-
-    }
-
-    static onDisconnect(io, socket) {
-
+        let player;
+        socket.on('newPlayer', (data) => {
+            socket.join(room);
+            socket.room = room;
+            player = new Player(socket.id, data.x, data.y);
+            let players = [];
+            players.push[player];
+        })
     }
 }
 
