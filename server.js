@@ -16,15 +16,11 @@ server.listen(8000, () => {
 });
 
 io.on('connect', (socket) => {
-    socket.on('connect', (data) => {
-        new Player(players.length + 1, Math.random(0, 5000), Math.random(0, 5000), data.hero, 0);
-        Player.onConnect(io, socket);
-    })
-    socket.on('move', (data) => {
-        Player.onMove(data.targX, data.targY);
-    })
+
+    Player.onConnect(io, socket);
+
     socket.on('disconnect', () => {
-        Player.onDisconnect(io, socket);
+    
     })
 })
 

@@ -12,6 +12,7 @@ export default class Game extends Phaser.Scene {
         var background = this.physics.add.sprite(0,0,'background');
         var cammy = this.cameras.main;
         var player = new Player(this,cammy);
+        player.create();
         this.input.on('pointermove', (pointer) => {
             player.movePlayer(pointer.x,pointer.y);
         }, this)

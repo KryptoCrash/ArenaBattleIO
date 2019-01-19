@@ -1,8 +1,13 @@
+import io from 'socket.io-client';
+//                     /\
+// This line is bugged ||
+//                     ||
+
 export default class Player {
     constructor(scene, camera){
         this.x = 0;
         this.y = 0;
-        this.socket = io();
+        this.socket = io.connect('http://localhost:8000');
         this.scene = scene;
         this.players = {};
         this.cammy = camera;

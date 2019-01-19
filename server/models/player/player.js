@@ -12,6 +12,11 @@ module.exports =  class Player {
             player = new Player(socket.id, data.x, data.y);
             let players = [];
             players.push[player];
+            socket.emit('allPlayers', players);
+            socket.emit('newPlayer', player);
+        })
+        socket.on('movePlayer', (data) => {
+            socket.emit('movePlayer',socket.id, data.x, data.y);
         })
     }
 }
