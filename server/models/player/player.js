@@ -7,8 +7,8 @@ module.exports =  class Player {
     static onConnect(io, socket) {
         let player;
         socket.on('newPlayer', (data) => {
-            socket.join(room);
-            socket.room = room;
+            //socket.join(room);
+            //socket.room = room;
             player = new Player(socket.id, data.x, data.y);
             let players = [];
             players.push[player];

@@ -1,8 +1,3 @@
-import io from 'socket.io-client';
-//                     /\
-// This line is bugged ||
-//                     ||
-
 export default class Player {
     constructor(scene, camera){
         this.x = 0;
@@ -21,11 +16,12 @@ export default class Player {
         data.forEach((player) => {
             this.addPlayer(player.id, player.x, player.y);
         });
-        
+    //this.cammy.startFollow(this.players[this.socket.id]);  
+    //ERROR: this.players[this.socket.id] is not a game object.  
     })
-    this.cammy.startFollow(this.players[this.socket.id]);
     this.socket.on('movePlayer', (data) => {
-        this.scene.physics.moveTo(this.players[data.id], data.x, data.y);
+        //this.scene.physics.moveTo(this.players[data.id],data.x,data.y);
+        //ERROR: this.players[this.socket.id] is not a game object.  
     })
     this.socket.on('disconnect', (data) => {
         this.players[data.id].destroy();

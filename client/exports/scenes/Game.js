@@ -5,7 +5,7 @@ export default class Game extends Phaser.Scene {
         super('Game')
     }
     preload() {
-        this.load.image('background', './client/assets/shit.png');
+        this.load.image('background', './client/assets/backgroundtest.png');
         this.load.svg('player', './client/assets/Character.svg');
     }
     create() {
