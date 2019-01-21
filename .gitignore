@@ -1,4 +1,5 @@
-#Not sure what else, other people can edit this for me ok
-
-#Node Modules
-node_modules
+#This is a file that tells Github which files to ignore.
+#This is useful for for things like the cache, or node_modules.
+#We're ignoring the cache, and node modules because they can, and will be re-installed.
+.cache/
+node_modules/
