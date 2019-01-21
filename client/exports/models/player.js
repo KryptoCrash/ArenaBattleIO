@@ -7,30 +7,37 @@ export default class Player {
         this.players = {};
         this.cammy = camera;
     }
+    
     create() {
     this.socket.emit('newPlayer', this.x, this.y)
-    this.socket.on('newPlayer', (data) => {
-        this.addPlayer(data.id,data.x,data.y);
+    
+    this.socket.on('newPlayer', async (data) => {
+        await this.addPlayer(data.id,data.x,data.y);
     })
+    
     this.socket.on('allPlayers', (data) => {
-        data.forEach((player) => {
-            this.addPlayer(player.id, player.x, player.y);
+        data.forEach(async (player) => {
+           await this.addPlayer(player.id, player.x, player.y);
         });
-    //this.cammy.startFollow(this.players[this.socket.id]);  
+        this.cammy.startFollow(this.players[this.socket.id]);  
     //ERROR: this.players[this.socket.id] is not a game object.  
     })
+    
     this.socket.on('movePlayer', (data) => {
-        //this.scene.physics.moveTo(this.players[data.id],data.x,data.y);
+        this.scene.physics.moveTo(this.players[data.id],data.x,data.y);
         //ERROR: this.players[this.socket.id] is not a game object.  
     })
+    
     this.socket.on('disconnect', (data) => {
         this.players[data.id].destroy();
         delete this.players[data.id];
     })
     }
+    
     addPlayer(id,x,y) {
         this.players[id] = this.scene.physics.add.sprite(x,y,'player');
     }
+    
     movePlayer(x,y) {
         this.socket.emit('movePlayer', x,y);
     }
