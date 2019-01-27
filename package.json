@@ -2,7 +2,7 @@
   "name": "arenabattleio",
   "version": "1.0.0",
   "description": "Welcome to ArenaBattle!\r Currently, we're in the process of making a game many people will love, and it will be made with phaser 3.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

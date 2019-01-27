@@ -3,3 +3,4 @@
 #We're ignoring the cache, and node modules because they can, and will be re-installed.
 .cache/
 node_modules/
+.editorconfig
