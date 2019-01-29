@@ -2,24 +2,22 @@ import Player from "../models/player.js";
 
 export default class Game extends Phaser.Scene {
     constructor() {
-        super('Game')
+        super("Game");
+        var player;
     }
     preload() {
-        this.load.image('background', './client/assets/backgroundtest.png');
-        this.load.svg('player', './client/assets/Character.svg');
+        this.load.image("background", "./client/assets/backgroundtest.png");
+        this.load.svg("player", "./client/assets/Character.svg");
     }
     create() {
-        var background = this.physics.add.sprite(0,0,'background');
+        var background = this.physics.add.sprite(0, 0, "background");
         var cammy = this.cameras.main;
-        var player = new Player(this,cammy);
-        player.create();
-        this.input.on('pointermove', (pointer) => {
-            player.movePlayer(pointer.x,pointer.y);
-        }, this)
-
+        this.player = new Player(this, cammy);
+        this.input.on("pointermove", pointer => {
+            this.player.movePlayer(pointer);
+        }, this);
     }
     update() {
-        
+        this.player.create();
     }
-
 }
