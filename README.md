@@ -8,8 +8,8 @@ This game is simple: You pick a hero, the hero has weapons, and there are other 
 Hit your enemies to kill them.
 Victory Royale!
 
-Very simple game mechanics, and beautiful HD graphics that will forsure suit your tastes.
+Very simple game mechanics, and beautiful HD graphics that will for sure suit your tastes.
 
 If you don't like it, Make an issue! Tell us why you didn't like it! Be specific!
 
-Thank you!
+Thank you for your time!
