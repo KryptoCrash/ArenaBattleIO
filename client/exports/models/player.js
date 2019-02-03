@@ -14,6 +14,7 @@ export default class Player {
                 var val = data[key];
                 this.addPlayer(key,val.x,val.y)
             });
+            this.cammy.startFollow(this.players[this.socket.id])
             //ERROR: this.players[this.socket.id] is not a game object.  
         })
         this.socket.on('newPlayer', (data) => {
@@ -43,6 +44,6 @@ export default class Player {
     }
     movePlayer(pointer) {
         // this.scene.physics.moveToObject(this.players[this.socket.id],pointer)
-        this.socket.emit('movePlayer', pointer.x, pointer.y);
+        this.socket.emit('movePlayer', pointer.worldX, pointer.worldY);
     }
 }
