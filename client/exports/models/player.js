@@ -14,14 +14,21 @@ export default class Player {
                 var val = data[key];
                 this.addPlayer(key,val.x,val.y)
             });
+            this.cammy.startFollow(this.players[this.socket.id])
             //ERROR: this.players[this.socket.id] is not a game object.  
         })
         this.socket.on('newPlayer', (data) => {
             this.addPlayer(data.id, data.x, data.y)
         })
-        this.socket.on('playerMoved', (data)=> {
-            this.players[data.id].x = data.x
-            this.players[data.id].y = data.y
+        // this.socket.on('playerMoved', (data)=> {
+        //     this.players[data.id].x = data.x
+        //     this.players[data.id].y = data.y
+        // })
+        this.socket.on('update', (data) => {
+            Object.keys(data).forEach((id) => {
+                this.players[id].x = data[id].x;
+                this.players[id].y = data[id].y;
+            });
         })
         //Doesnt work as intended. Could be that player.create() must be run multiple times.
         this.socket.on('disconnect', (data) => {
@@ -37,6 +44,6 @@ export default class Player {
     }
     movePlayer(pointer) {
         // this.scene.physics.moveToObject(this.players[this.socket.id],pointer)
-        this.socket.emit('movePlayer', pointer.x, pointer.y);
+        this.socket.emit('movePlayer', pointer.worldX, pointer.worldY);
     }
 }

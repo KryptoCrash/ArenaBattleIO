@@ -3,6 +3,8 @@ module.exports = class Player {
         this.x = x;
         this.y = y;
         this.id = id;
+        this.vx = 0;
+        this.vy = 0;
     }
     
 }
