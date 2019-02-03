@@ -7,8 +7,8 @@ export default class Player {
         this.players = {};
         this.cammy = camera;
     }
-    create() {
-    this.socket.on('allPlayers', (data) => {
+    update() {
+        this.socket.on('allPlayers', (data) => {
             console.log(data)
             Object.keys(data).forEach((key) => {
                 var val = data[key];
@@ -16,11 +16,13 @@ export default class Player {
             });
             //ERROR: this.players[this.socket.id] is not a game object.  
         })
-        /*this.socket.on('movePlayer', (data)=> {
-            console.log(data)
+        this.socket.on('newPlayer', (data) => {
+            this.addPlayer(data.id, data.x, data.y)
+        })
+        this.socket.on('playerMoved', (data)=> {
             this.players[data.id].x = data.x
             this.players[data.id].y = data.y
-        })*/
+        })
         //Doesnt work as intended. Could be that player.create() must be run multiple times.
         this.socket.on('disconnect', (data) => {
             this.players[data.id].destroy();
@@ -28,11 +30,13 @@ export default class Player {
         })
     }
     addPlayer(id, x, y) {
-        this.players[id] = this.scene.physics.add.sprite(x, y, 'player');
-        console.log('confirmed')
+        if (!this.players[id]) {
+            this.players[id] = this.scene.physics.add.sprite(x, y, 'player');
+            console.log('confirmed');
+        }
     }
     movePlayer(pointer) {
-        this.scene.physics.moveToObject(this.players[this.socket.id],pointer)
-        this.socket.emit('movePlayer', this.players[this.socket.id].x, this.players[this.socket.id].y);
+        // this.scene.physics.moveToObject(this.players[this.socket.id],pointer)
+        this.socket.emit('movePlayer', pointer.x, pointer.y);
     }
 }

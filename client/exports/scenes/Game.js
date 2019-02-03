@@ -3,7 +3,6 @@ import Player from "../models/player.js";
 export default class Game extends Phaser.Scene {
     constructor() {
         super("Game");
-        var player;
     }
     preload() {
         this.load.image("background", "./client/assets/backgroundtest.png");
@@ -18,6 +17,6 @@ export default class Game extends Phaser.Scene {
         }, this);
     }
     update() {
-        this.player.create();
+        this.player.update();
     }
 }
