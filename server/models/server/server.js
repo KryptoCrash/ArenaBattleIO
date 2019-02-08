@@ -1,13 +1,17 @@
+var heroHandler = require("../../events/heroHandler");
 var Player = require("../player/player");
+var calcMove = require("../../events/calcMove");
+var Bullet = require("../weapons/bullet");
 module.exports = class Server {
     constructor(io) {
         this.io = io;
         this.players = {};
+        this.weapons = {};
     }
     init() {
         this.io.on("connect", socket => {
             this.addPlayer(socket.id);
-            this.io.emit('newPlayer', {
+            this.io.emit("newPlayer", {
                 id: socket.id,
                 x: this.players[socket.id].x,
                 y: this.players[socket.id].y,
@@ -16,37 +20,57 @@ module.exports = class Server {
             });
             this.runSocket(socket);
         });
-        let last_time = (new Date).getTime();
+        this.setGameTime();
+    }
+    setGameTime() {
+        let last_time = new Date().getTime();
         setInterval(() => {
-            let current_time = (new Date).getTime(); 
+            let current_time = new Date().getTime();
             let dt = current_time - last_time;
-            this.update(dt);
-            last_time = (new Date).getTime();
-        }, 1000/60)
+            this.update(dt, this.players);
+            /*this.update(dt, this.weapons);
+             ^ Set up client side for this ^*/
+            last_time = new Date().getTime();
+        }, 1000 / 60);
     }
     runSocket(socket) {
-        socket.emit('allPlayers', this.players)
-        socket.on('movePlayer', (x,y) => {
-            let angle = Math.atan2(y - this.players[socket.id].y, x - this.players[socket.id].x)
-            let velocity = 100;
-            this.players[socket.id].vx = velocity * Math.cos(angle);
-            this.players[socket.id].vy = velocity * Math.sin(angle);
-        })
+        socket.emit("allPlayers", this.players);
+        socket.on("movePlayer", async (x, y) => {
+            this.players[socket.id].angle = await calcMove(
+                x,
+                y,
+                this.players[socket.id],
+                this.players[socket.id].hero.speed
+            );
+        });
+        socket.on("heroChange", heroC => {
+            let hero = new heroHandler(heroC);
+            this.players[socket.id].hero = hero;
+        });
         socket.on("disconnect", () => {
             delete this.players[socket.id];
         });
-    }
-    addPlayer(id) {
-        var player = new Player(id, Math.random() * 500, Math.random() * 500);
-        this.players[id] = player;
-        // console.log(this.players);
-    }
-    update(dt) {
-        let dt_sec = dt / 1000;
-        Object.keys(this.players).forEach((id) => {
-            this.players[id].x += this.players[id].vx * dt_sec;
-            this.players[id].y += this.players[id].vy * dt_sec;
+        socket.on("shoot", async (x, y) => {
+            let bullet = await new Bullet(this.players[socket.id]);
+            this.weapons[socket.id] = bullet;
+            bullet.shoot();
         });
-        this.io.emit("update", this.players);
+    }
+    addPlayer(id, hero) {
+        var player = new Player(
+            id,
+            Math.random() * 500,
+            Math.random() * 500,
+            hero
+        );
+        this.players[id] = player;
+    }
+    update(dt, gameObj) {
+        let dt_sec = dt / 1000;
+        Object.keys(gameObj).forEach(id => {
+            gameObj[id].x += gameObj[id].vx * dt_sec;
+            gameObj[id].y += gameObj[id].vy * dt_sec;
+        });
+        this.io.emit("update", gameObj);
     }
 };

@@ -1,12 +1,12 @@
-import Menu from './exports/scenes/Menu.js';
-import Game from './exports/scenes/Game.js';
+import Menu from "./exports/scenes/Menu.js";
+import Game from "./exports/scenes/Game.js";
 
 var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
     physics: {
-        default: 'arcade'
+        default: "arcade"
     },
     arcade: {
         debug: false

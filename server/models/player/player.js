@@ -1,13 +1,14 @@
 module.exports = class Player {
-    constructor(id, x, y) {
+    constructor(id, x, y, hero) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.vx = 0;
         this.vy = 0;
+        this.hero = hero;
+        this.angle = 0;
     }
-    
-}
+};
 /*UPDATE:
 We are going to be unhackable.
 The client will not be able to hack anything, but will purely be a screen for showing things.
