@@ -27,14 +27,15 @@ module.exports = class Server {
         setInterval(() => {
             let current_time = new Date().getTime();
             let dt = current_time - last_time;
-            this.update(dt, this.players);
-            /*this.update(dt, this.weapons);
-             ^ Set up client side for this ^*/
+            this.update(dt, this.players, "update");
+            //this.update(dt, this.weapons, "updateWeapons");
+            // ^ Set up client side for this ^
             last_time = new Date().getTime();
         }, 1000 / 60);
     }
     runSocket(socket) {
         socket.emit("allPlayers", this.players);
+        socket.emit("allWeapons", this.weapons);
         socket.on("movePlayer", async (x, y) => {
             this.players[socket.id].angle = await calcMove(
                 x,
@@ -48,11 +49,17 @@ module.exports = class Server {
             this.players[socket.id].hero = hero;
         });
         socket.on("disconnect", () => {
+            socket.emit("disconnect1", socket.id);
             delete this.players[socket.id];
         });
         socket.on("shoot", async (x, y) => {
             let bullet = await new Bullet(this.players[socket.id]);
             this.weapons[socket.id] = bullet;
+            socket.emit("newWeapon", {
+                id: socket.id,
+                x: bullet.x,
+                y: bullet.y
+            });
             bullet.shoot();
         });
     }
@@ -65,12 +72,12 @@ module.exports = class Server {
         );
         this.players[id] = player;
     }
-    update(dt, gameObj) {
+    update(dt, gameObj, type) {
         let dt_sec = dt / 1000;
         Object.keys(gameObj).forEach(id => {
             gameObj[id].x += gameObj[id].vx * dt_sec;
             gameObj[id].y += gameObj[id].vy * dt_sec;
         });
-        this.io.emit("update", gameObj);
+        this.io.emit(type, gameObj);
     }
 };

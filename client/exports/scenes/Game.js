@@ -19,6 +19,9 @@ export default class Game extends Phaser.Scene {
             },
             this
         );
+        this.input.on("pointerdown", pointer => {
+            this.player.shoot(pointer);
+        });
     }
     update() {
         this.player.update();
