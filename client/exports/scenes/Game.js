@@ -7,6 +7,7 @@ export default class Game extends Phaser.Scene {
     preload() {
         this.load.svg("background", "./client/assets/Test_Map.svg");
         this.load.svg("player", "./client/assets/Character.svg");
+        this.load.svg('dagger', './client/assets/Thief_Dagger.svg')
     }
     create() {
         var background = this.physics.add.sprite(0, 0, "background");

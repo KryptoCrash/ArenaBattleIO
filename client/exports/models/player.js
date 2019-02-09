@@ -21,7 +21,7 @@ export default class Player {
             this.add(data.id, data.x, data.y, this.players);
         });
         this.socket.on("newWeapon", data => {
-            this.add(data.id, data.x, data.y, this.weapons);
+            this.add(data.id, data.x, data.y, this.weapons, data.type.name);
         });
         this.socket.on("allWeapons", data => {
             Object.keys(data).forEach(key => {
@@ -41,14 +41,22 @@ export default class Player {
                 this.weapons[id].y = data[id].y;
             });
         });
+        this.socket.on("removeWeapon", (id) => {
+            this.weapons[id].destroy();
+            delete this.weapons[id];
+        });
         this.socket.on("disconnect1", (id) => {
             this.players[id].destroy();
             delete this.players[id];
         });
     }
-    add(id, x, y, gameObj) {
+    add(id, x, y, gameObj, type) {
         if (!gameObj[id]) {
-            gameObj[id] = this.scene.physics.add.sprite(x, y, "player");
+            if(type=='dagger'){
+                gameObj[id] = this.scene.physics.add.sprite(x, y, "dagger");
+            } else {
+                gameObj[id] = this.scene.physics.add.sprite(x, y, "player");
+            }
         }
     }
     movePlayer(pointer) {

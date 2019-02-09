@@ -3,7 +3,8 @@ module.exports = class Scout {
         this.speed = 400;
         this.bullet = {
             speed: 1000,
-            fireRate: 60
+            fireRate: 90,
+            name: 'dagger'
         };
     }
 };

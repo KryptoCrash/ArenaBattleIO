@@ -3,7 +3,8 @@ module.exports = class Archer {
         this.speed = 100;
         this.bullet = {
             speed: 1000,
-            fireRate: 60
+            fireRate: 60,
+            name: 'arrow'
         };
     }
 };

@@ -48,18 +48,19 @@ module.exports = class Server {
             this.players[socket.id].hero = hero;
         });
         socket.on("disconnect", () => {
-            socket.emit("disconnect1", socket.id);
+            this.io.emit("disconnect1", socket.id);
             delete this.players[socket.id];
         });
         socket.on("shoot", async (x, y) => {
             let bullet = await new Bullet(this.players[socket.id]);
             this.weapons[socket.id] = bullet;
-            this.io.emit("newWeapon", {
-                id: socket.id,
-                x: bullet.x,
-                y: bullet.y
-            });
+            this.io.emit("newWeapon", bullet);
             bullet.shoot();
+            _this = await this;
+            setTimeout(async () => { 
+                await _this.io.emit("removeWeapon", socket.id);
+                delete this.weapons[socket.id];
+            }, bullet.lifetime);
         });
     }
     addPlayer(id, hero) {
