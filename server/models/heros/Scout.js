@@ -1,4 +1,4 @@
-module.exports = class Archer {
+module.exports = class Scout {
     constructor() {
         this.speed = 400;
         this.bullet = {

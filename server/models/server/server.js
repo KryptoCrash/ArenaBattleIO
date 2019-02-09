@@ -28,8 +28,7 @@ module.exports = class Server {
             let current_time = new Date().getTime();
             let dt = current_time - last_time;
             this.update(dt, this.players, "update");
-            //this.update(dt, this.weapons, "updateWeapons");
-            // ^ Set up client side for this ^
+            this.update(dt, this.weapons, "updateWeapons");
             last_time = new Date().getTime();
         }, 1000 / 60);
     }
@@ -55,7 +54,7 @@ module.exports = class Server {
         socket.on("shoot", async (x, y) => {
             let bullet = await new Bullet(this.players[socket.id]);
             this.weapons[socket.id] = bullet;
-            socket.emit("newWeapon", {
+            this.io.emit("newWeapon", {
                 id: socket.id,
                 x: bullet.x,
                 y: bullet.y
