@@ -56,7 +56,7 @@ module.exports = class Server {
             this.weapons[socket.id] = bullet;
             this.io.emit("newWeapon", bullet);
             bullet.shoot();
-            _this = await this;
+            let _this = await this;
             setTimeout(async () => { 
                 await _this.io.emit("removeWeapon", socket.id);
                 delete this.weapons[socket.id];

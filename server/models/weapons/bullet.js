@@ -8,7 +8,7 @@ module.exports = class Bullet {
         this.vx = 0;
         this.vy = 0;
         this.type = player.hero.bullet;
-        this.lifetime = 10; // milliseconds
+        this.lifetime = 250; // milliseconds
     }
     shoot() {
         calcMoveWithAngle(this.angle, this, this.type.speed);
