@@ -1,7 +1,8 @@
 var calcMoveWithAngle = require("../../events/calcMoveWithAngle");
 module.exports = class Bullet {
-    constructor(player) {
-        this.id=player.id;
+    constructor(player, id) {
+        this.player_id = player.id;
+        this.id = id;
         this.angle = player.angle;
         this.x = player.x;
         this.y = player.y;
