@@ -6,7 +6,7 @@ There will be many classes to choose from and use. Master all the classes, and d
 This game is simple: You pick a hero, the hero has weapons, and there are other heros, with other weapons.
 
 Hit your enemies to kill them.
-Victory Royale!
+Victory!
 
 Very simple game mechanics, and beautiful HD graphics that will forsure suit your tastes.
 
