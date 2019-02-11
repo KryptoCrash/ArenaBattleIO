@@ -43,9 +43,9 @@ module.exports = class Server {
                 this.players[socket.id].hero.speed
             );
         });
-        socket.on("heroChange", heroC => {
+        socket.on("heroChange", async (heroC) => {
             let hero = new heroHandler(heroC);
-            this.players[socket.id].hero = hero;
+            this.players[socket.id].hero = await hero;
         });
         socket.on("disconnect", () => {
             this.io.emit("disconnect1", socket.id);

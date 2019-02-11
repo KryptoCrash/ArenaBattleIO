@@ -31,31 +31,35 @@ export default class Player {
         });
         this.socket.on("update", data => {
             Object.keys(data).forEach(id => {
+                let deg = data[id].angle*(180/Math.PI)+90;
                 this.players[id].x = data[id].x;
                 this.players[id].y = data[id].y;
+                this.players[id].setAngle(deg);
             });
         });
         this.socket.on("updateWeapons", data => {
             Object.keys(data).forEach(id => {
+                let deg = data[id].angle*(180/Math.PI)+90;
                 this.weapons[id].x = data[id].x;
                 this.weapons[id].y = data[id].y;
+                this.weapons[id].setAngle(deg);
             });
         });
-        this.socket.on("removeWeapon", (id) => {
+        this.socket.on("removeWeapon", id => {
             this.weapons[id].destroy();
             delete this.weapons[id];
         });
-        this.socket.on("disconnect1", (id) => {
+        this.socket.on("disconnect1", id => {
             this.players[id].destroy();
             delete this.players[id];
         });
     }
     add(id, x, y, gameObj, type) {
         if (!gameObj[id]) {
-            if(type=='dagger'){
-                gameObj[id] = this.scene.physics.add.sprite(x, y, "dagger");
+            if (type == "dagger") {
+                gameObj[id] = this.scene.physics.add.sprite(x, y, "dagger").setScale(0.4,0.4);
             } else {
-                gameObj[id] = this.scene.physics.add.sprite(x, y, "player");
+                gameObj[id] = this.scene.physics.add.sprite(x, y, "player").setScale(0.8,0.8);
             }
         }
     }
