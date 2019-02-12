@@ -3,8 +3,12 @@ import Game from "./exports/scenes/Game.js";
 
 var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    scale: {
+        mode: Phaser.Scale.RESIZE,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: window.innerWidth*window.devicePixelRatio,
+        height: window.innerHeight*window.devicePixelRatio
+    },
     physics: {
         default: "arcade"
     },

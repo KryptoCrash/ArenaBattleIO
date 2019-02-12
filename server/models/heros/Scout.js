@@ -1,8 +1,8 @@
 module.exports = class Scout {
     constructor() {
-        this.speed = 100;
+        this.speed = 400;
         this.bullet = {
-            speed: 500,
+            speed: 1000,
             fireRate: 90,
             range: 500,
             name: 'dagger'
