@@ -19,15 +19,18 @@ export default class Player {
         this.socket.on("allPlayers", data => {
             Object.keys(data).forEach(key => {
                 var val = data[key];
-                this.add(key, val.x, val.y, this.players);
+                this.add(
+                    { id: key, x: val.x, y: val.y, type: { name: "player" } },
+                    this.players
+                );
             });
             this.cammy.startFollow(this.players[this.socket.id]);
         });
         this.socket.on("newPlayer", data => {
-            this.add(data.id, data.x, data.y, this.players);
+            this.add(data, this.players);
         });
         this.socket.on("newWeapon", data => {
-            this.add(data.id, data.x, data.y, this.weapons, data.type.name);
+            this.add(data, this.weapons);
         });
         this.socket.on("allWeapons", data => {
             Object.keys(data).forEach(key => {
@@ -60,16 +63,28 @@ export default class Player {
             delete this.players[id];
         });
     }
-    add(id, x, y, gameObj, type) {
-        if (!gameObj[id]) {
-            if (type == "dagger") {
-                gameObj[id] = this.scene.physics.add
-                    .sprite(x, y, "dagger")
+    add(data, gameObj) {
+        if (!gameObj[data.id]) {
+            if (data.type.name == "dagger") {
+                gameObj[data.id] = this.scene.physics.add
+                    .sprite(data.x, data.y, "dagger")
+                    .setAngle(data.angle * (180 / Math.PI) + 90)
                     .setScale(0.4, 0.4);
-            } else {
-                gameObj[id] = this.scene.physics.add
-                    .sprite(x, y, "player")
-                    .setScale(0.8, 0.8);
+            } else if (data.type.name == "player") {
+                var playerBody = this.scene.physics.add.sprite(0, 0, "player");
+                var playerHand1 = this.scene.physics.add
+                    .sprite(-40, -40, "playerHand")
+                    .setScale(1.5, 1.5);
+                var playerHand2 = this.scene.physics.add
+                    .sprite(40, -40, "playerHand")
+                    .setScale(1.5, 1.5);
+                var hat = this.scene.physics.add.sprite(0, 0, "archerHat");
+                gameObj[data.id] = this.scene.add.container(data.x, data.y, [
+                    playerBody,
+                    playerHand1,
+                    playerHand2,
+                    hat
+                ]);
             }
         }
     }

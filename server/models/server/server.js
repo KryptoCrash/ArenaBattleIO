@@ -17,7 +17,10 @@ module.exports = class Server {
                 x: this.players[socket.id].x,
                 y: this.players[socket.id].y,
                 vx: 0,
-                vy: 0
+                vy: 0,
+                type: {
+                    name: 'player'
+                }
             });
             this.runSocket(socket);
         });
