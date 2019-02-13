@@ -12,16 +12,7 @@ module.exports = class Server {
     init() {
         this.io.on("connect", socket => {
             this.addPlayer(socket.id);
-            this.io.emit("newPlayer", {
-                id: socket.id,
-                x: this.players[socket.id].x,
-                y: this.players[socket.id].y,
-                vx: 0,
-                vy: 0,
-                type: {
-                    name: 'player'
-                }
-            });
+            this.io.emit("newPlayer", this.players[socket.id]);
             this.runSocket(socket);
         });
         this.setGameTime();
