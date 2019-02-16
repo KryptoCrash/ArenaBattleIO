@@ -71,15 +71,17 @@ export default class Player {
                     .setAngle(data.angle * (180 / Math.PI) + 90)
                     .setScale(0.4, 0.4);
             } else if (data.type.name == "player") {
-                var playerProps = [];
-                // console.log(data)
-                Object.keys(data.props).forEach(prop => {
-                    var val = data.props[prop]
-                    playerProps.push(
-                        this.scene.physics.add.sprite(val.x, val.y, val.name).setScale(val.scalex, val.scaley)
-                    );
-                });
-                gameObj[data.id] = await this.scene.add.container(
+                let playerProps = [];
+                console.log(data)
+                for (let key in data.props) {
+                    if (data.props.hasOwnProperty(key)) {
+                        let prop = data.props[key];
+                        playerProps.push(
+                            this.scene.physics.add.sprite(prop.x, prop.y, prop.name).setScale(prop.scalex, prop.scaley)
+                        );
+                    }
+                }
+                gameObj[data.id] = this.scene.add.container(
                     data.x,
                     data.y,
                     playerProps
