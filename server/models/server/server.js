@@ -11,7 +11,7 @@ module.exports = class Server {
     }
     init() {
         this.io.on("connect", socket => {
-            this.addPlayer(socket.id);
+            this.addPlayer(socket.id, heroHandler("scout"));
             this.io.emit("newPlayer", this.players[socket.id]);
             this.runSocket(socket);
         });
@@ -39,7 +39,7 @@ module.exports = class Server {
             );
         });
         socket.on("heroChange", async (heroC) => {
-            let hero = new heroHandler(heroC);
+            let hero = heroHandler(heroC);
             this.players[socket.id].hero = await hero;
         });
         socket.on("disconnect", () => {
