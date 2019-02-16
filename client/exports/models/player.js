@@ -72,11 +72,11 @@ export default class Player {
                     .setScale(0.4, 0.4);
             } else if (data.type.name == "player") {
                 var playerProps = [];
-                console.log(data)
+                // console.log(data)
                 Object.keys(data.props).forEach(prop => {
                     var val = data.props[prop]
                     playerProps.push(
-                        this.scene.physics.add.sprite(val.x, val.y, val.name)
+                        this.scene.physics.add.sprite(val.x, val.y, val.name).setScale(val.scalex, val.scaley)
                     );
                 });
                 gameObj[data.id] = await this.scene.add.container(
