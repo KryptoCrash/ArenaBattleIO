@@ -7,6 +7,55 @@ module.exports = class Player {
         this.vy = 0;
         this.hero = hero;
         this.angle = 0;
+        this.type = {
+            name: 'player'
+        }
+        this.props = {
+            body: {
+                x: 0,
+                y: 0,
+                id: this.id,
+                angle: 0,
+                vx: 0,
+                vy: 0,
+                scalex: 1,
+                scaley: 1,
+                name: 'body'
+            },
+            hand1: {
+                x: -40,
+                y: -40,
+                id: this.id,
+                angle: 0,
+                vx: 0,
+                vy: 0,
+                scalex: 1.5,
+                scaley: 1.5,
+                name: 'hand1'
+            },
+            hand2: {
+                x: 40,
+                y: -40,
+                id: this.id,
+                angle: 0,
+                vx: 0,
+                vy: 0,
+                scalex: 1.5,
+                scaley: 1.5,
+                name: 'hand2'
+            },
+            hat: {
+                x: 0,
+                y: 0,
+                id: this.id,
+                angle: 0,
+                vx: 0,
+                vy: 0,
+                scalex: 1,
+                scaley: 1,
+                name: 'hat'
+            }
+        }
     }
 };
 /*UPDATE:

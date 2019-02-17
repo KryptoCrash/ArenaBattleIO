@@ -63,7 +63,7 @@ export default class Player {
             delete this.players[id];
         });
     }
-    add(data, gameObj) {
+    async add(data, gameObj) {
         if (!gameObj[data.id]) {
             if (data.type.name == "dagger") {
                 gameObj[data.id] = this.scene.physics.add
@@ -71,20 +71,21 @@ export default class Player {
                     .setAngle(data.angle * (180 / Math.PI) + 90)
                     .setScale(0.4, 0.4);
             } else if (data.type.name == "player") {
-                var playerBody = this.scene.physics.add.sprite(0, 0, "player");
-                var playerHand1 = this.scene.physics.add
-                    .sprite(-40, -40, "playerHand")
-                    .setScale(1.5, 1.5);
-                var playerHand2 = this.scene.physics.add
-                    .sprite(40, -40, "playerHand")
-                    .setScale(1.5, 1.5);
-                var hat = this.scene.physics.add.sprite(0, 0, "archerHat");
-                gameObj[data.id] = this.scene.add.container(data.x, data.y, [
-                    playerBody,
-                    playerHand1,
-                    playerHand2,
-                    hat
-                ]);
+                let playerProps = [];
+                console.log(data)
+                for (let key in data.props) {
+                    if (data.props.hasOwnProperty(key)) {
+                        let prop = data.props[key];
+                        playerProps.push(
+                            this.scene.physics.add.sprite(prop.x, prop.y, prop.name).setScale(prop.scalex, prop.scaley)
+                        );
+                    }
+                }
+                gameObj[data.id] = this.scene.add.container(
+                    data.x,
+                    data.y,
+                    playerProps
+                );
             }
         }
     }

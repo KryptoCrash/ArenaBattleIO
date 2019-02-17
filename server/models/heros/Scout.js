@@ -1,7 +1,7 @@
 module.exports = class Scout {
     constructor() {
         this.speed = 400;
-        this.name = "archer";
+        this.name = "scout";
         this.bullet = {
             speed: 1000,
             fireRate: 90,
