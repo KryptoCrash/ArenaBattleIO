@@ -1,4 +1,4 @@
-import Player from "../models/player.js";
+import Client from "../models/client.js";
 
 export default class Game extends Phaser.Scene {
     constructor() {
@@ -15,7 +15,7 @@ export default class Game extends Phaser.Scene {
     create() {
         var background = this.physics.add.sprite(0, 0, "background").setScale(100,100);
         var cammy = this.cameras.main;
-        this.player = new Player(this, cammy);
+        this.player = new Client(this, cammy);
         this.input.on(
             "pointermove",
             pointer => {

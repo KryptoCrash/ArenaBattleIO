@@ -1,8 +1,9 @@
+var propHandler = require("../../events/propHandler");
 var heroHandler = require("../../events/heroHandler");
 var Player = require("../player/player");
 var calcMove = require("../../events/calcMove");
 var Bullet = require("../weapons/bullet");
-const uuidv4 = require('uuid/v4');
+const uuidv4 = require("uuid/v4");
 module.exports = class Server {
     constructor(io) {
         this.io = io;
@@ -13,6 +14,7 @@ module.exports = class Server {
         this.io.on("connect", socket => {
             this.addPlayer(socket.id, heroHandler("scout"));
             this.io.emit("newPlayer", this.players[socket.id]);
+            this.io.emit("newProps", this.players[socket.id].props);
             this.runSocket(socket);
         });
         this.setGameTime();
@@ -30,6 +32,7 @@ module.exports = class Server {
     runSocket(socket) {
         socket.emit("allPlayers", this.players);
         socket.emit("allWeapons", this.weapons);
+        socket.emit("allProps", propHandler(this.players));
         socket.on("movePlayer", async (x, y) => {
             this.players[socket.id].angle = await calcMove(
                 x,
@@ -38,7 +41,7 @@ module.exports = class Server {
                 this.players[socket.id].hero.speed
             );
         });
-        socket.on("heroChange", async (heroC) => {
+        socket.on("heroChange", async heroC => {
             let hero = heroHandler(heroC);
             this.players[socket.id].hero = await hero;
         });
@@ -52,7 +55,7 @@ module.exports = class Server {
             this.io.emit("newWeapon", bullet);
             bullet.shoot();
             let _this = await this;
-            setTimeout(async () => { 
+            setTimeout(async () => {
                 await _this.io.emit("removeWeapon", bullet.id);
                 delete this.weapons[bullet.id];
             }, bullet.lifetime);
