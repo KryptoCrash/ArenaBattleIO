@@ -12,8 +12,8 @@ module.exports = class Player {
         }
         this.props = {
             body: {
-                x: this.x,
-                y: this.y,
+                x: 0,
+                y: 0,
                 id: this.id,
                 angle: 0,
                 vx: 0,
@@ -23,8 +23,8 @@ module.exports = class Player {
                 name: 'body'
             },
             hand1: {
-                x: this.x-40,
-                y: this.y-40,
+                x: -40,
+                y: -40,
                 id: this.id,
                 angle: 0,
                 vx: 0,
@@ -34,8 +34,8 @@ module.exports = class Player {
                 name: 'hand1'
             },
             hand2: {
-                x: this.x+40,
-                y: this.y-40,
+                x: 40,
+                y: -40,
                 id: this.id,
                 angle: 0,
                 vx: 0,
@@ -45,8 +45,8 @@ module.exports = class Player {
                 name: 'hand2'
             },
             hat: {
-                x: this.x,
-                y: this.y,
+                x: 0,
+                y: 0,
                 id: this.id,
                 angle: 0,
                 vx: 0,

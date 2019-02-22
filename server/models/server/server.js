@@ -14,7 +14,7 @@ module.exports = class Server {
         this.io.on("connect", socket => {
             this.addPlayer(socket.id, heroHandler("scout"));
             this.io.emit("newPlayer", this.players[socket.id]);
-            this.io.emit("newProps", this.players[socket.id].props);
+            // this.io.emit("newProps", this.players[socket.id].props);
             this.runSocket(socket);
         });
         this.setGameTime();
@@ -32,7 +32,7 @@ module.exports = class Server {
     runSocket(socket) {
         socket.emit("allPlayers", this.players);
         socket.emit("allWeapons", this.weapons);
-        socket.emit("allProps", propHandler(this.players));
+        // socket.emit("allProps", propHandler(this.players));
         socket.on("movePlayer", async (x, y) => {
             this.players[socket.id].angle = await calcMove(
                 x,

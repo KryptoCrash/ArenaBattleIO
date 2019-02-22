@@ -25,17 +25,17 @@ export default class Client {
                     this.players
                 );
             });
-            await this.cammy.startFollow(this.players[this.socket.id].props.body);
+            await this.cammy.startFollow(this.players[this.socket.id]);
         });
-        this.socket.on("allProps", async data => {
-            await Object.keys(data).forEach(prop => {
-                var val = data[prop];
-                this.add(
-                    { val: val, prop: prop, type: { name: "prop" } },
-                    this.players[val.id].props
-                );
-            });
-        });
+        // this.socket.on("allProps", async data => {
+        //     await Object.keys(data).forEach(prop => {
+        //         var val = data[prop];
+        //         this.add(
+        //             { val: val, prop: prop, type: { name: "prop" } },
+        //             this.players[val.id]
+        //         );
+        //     });
+        // });
         this.socket.on("newPlayer", data => {
             this.add(data, this.players);
         });
@@ -51,8 +51,8 @@ export default class Client {
         this.socket.on("update", data => {
             Object.keys(data).forEach(async id => {
                 let deg = data[id].angle * (180 / Math.PI) + 90;
-                this.players[id].props.body.x = await data[id].x;
-                this.players[id].props.body.y = await data[id].y;
+                this.players[id].x = await data[id].x;
+                this.players[id].y = await data[id].y;
                 await this.players[id].props.body.setAngle(deg);
             });
         });
@@ -81,11 +81,21 @@ export default class Client {
                     .setAngle(data.angle * (180 / Math.PI) + 90)
                     .setScale(0.4, 0.4);
             } else if (data.type.name == "player") {
-                gameObj[data.id] = new Player(data);
-            } else if (data.type.name == "prop") {
-                gameObj[data.prop] = this.scene.physics.add
-                    .image(data.val.x, data.val.y, data.val.name)
-                    .setScale(data.val.scalex, data.val.scaley);
+                let playerProps = [];
+                console.log(data)
+                for (let key in data.props) {
+                    if (data.props.hasOwnProperty(key)) {
+                        let prop = data.props[key];
+                        playerProps.push(
+                            this.scene.physics.add.sprite(prop.x, prop.y, prop.name).setScale(prop.scalex, prop.scaley)
+                        );
+                    }
+                }
+                gameObj[data.id] = this.scene.add.container(
+                    data.x,
+                    data.y,
+                    playerProps
+                );
             }
         }
     }
