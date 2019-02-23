@@ -5,7 +5,7 @@ module.exports = class Bullet {
     constructor(player, id) {
         this.player_id = player.id;
         this.id = id;
-        let pos = rotatePoint(player.x, player.y, player.angle, player.x + player.props.hand1.x, player.y + player.props.hand1.y)
+        let pos = rotatePoint(player.x, player.y, player.angle + Math.PI, player.x + player.props.hand1.x, player.y + player.props.hand1.y)
         this.angle = player.angle;
         this.x = pos.x;
         this.y = pos.y;
