@@ -1,12 +1,16 @@
 export default class Player {
-    constructor(scene, camera) {
+    constructor(scene, camera, heroType) {
         this.x = 500;
         this.y = 500;
-        this.socket = io.connect("http://localhost:8000");
+        this.socket = io.connect("http://localhost:8000", {query: `hero=${heroType}`});
         this.scene = scene;
         this.players = {};
         this.weapons = {};
         this.cammy = camera;
+        this.heroType = heroType;
+    }
+    init() {
+        this.socket.emit("heroChange", this.heroType);
     }
     update() {
         this.cammy.setViewport(
@@ -15,14 +19,10 @@ export default class Player {
             this.scene.scale.width,
             this.scene.scale.height
         );
-        this.socket.emit("heroChange", "scout");
         this.socket.on("allPlayers", data => {
             Object.keys(data).forEach(key => {
                 var val = data[key];
-                this.add(
-                    { id: key, x: val.x, y: val.y, type: { name: "player" } },
-                    this.players
-                );
+                this.add(val, this.players);
             });
             this.cammy.startFollow(this.players[this.socket.id]);
         });
@@ -65,19 +65,17 @@ export default class Player {
     }
     async add(data, gameObj) {
         if (!gameObj[data.id]) {
-            if (data.type.name == "dagger") {
-                gameObj[data.id] = this.scene.physics.add
-                    .sprite(data.x, data.y, "dagger")
-                    .setAngle(data.angle * (180 / Math.PI) + 90)
-                    .setScale(0.4, 0.4);
-            } else if (data.type.name == "player") {
+            if (data.type.name === null || data.type.name === undefined)
+                return "ERROR: No Input";
+            if (data.type.name == "player") {
                 let playerProps = [];
-                console.log(data)
                 for (let key in data.props) {
                     if (data.props.hasOwnProperty(key)) {
                         let prop = data.props[key];
                         playerProps.push(
-                            this.scene.physics.add.sprite(prop.x, prop.y, prop.name).setScale(prop.scalex, prop.scaley)
+                            this.scene.physics.add
+                                .sprite(prop.x, prop.y, prop.name)
+                                .setScale(prop.scalex, prop.scaley)
                         );
                     }
                 }
@@ -86,6 +84,11 @@ export default class Player {
                     data.y,
                     playerProps
                 );
+            } else {
+                gameObj[data.id] = this.scene.physics.add
+                    .sprite(data.x, data.y, data.type.name)
+                    .setAngle(data.angle * (180 / Math.PI) + 90)
+                    .setScale(0.5, 0.5);
             }
         }
     }

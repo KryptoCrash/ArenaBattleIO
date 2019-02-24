@@ -7,14 +7,22 @@ export default class Menu extends Phaser.Scene {
     }
     create() {
         var cammy = this.cameras.main;
-        var startButton = this.physics.add.image(
-            this.scale.width/2,
+        var scoutButton = this.physics.add.image(
+            this.scale.width/3,
             this.scale.height/2,
             "startButton"
         ).setInteractive();
-        startButton.on('pointerdown', ()=>{
-                this.scene.start('Game')
+        var archerButton = this.physics.add.image(
+            this.scale.width * (2/3),
+            this.scale.height/2,
+            "startButton"
+        ).setInteractive();
+        scoutButton.on('pointerdown', ()=>{
+                this.scene.start('Game', 'scout')
         })
+        archerButton.on('pointerdown', ()=>{
+            this.scene.start('Game', 'archer')
+    })
     }
     update() {
 

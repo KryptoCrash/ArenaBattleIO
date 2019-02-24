@@ -53,7 +53,18 @@ module.exports = class Player {
                 vy: 0,
                 scalex: 1,
                 scaley: 1,
-                name: 'hat'
+                name: `${hero.name}Hat`
+            },
+            weapon: {
+                x: 40,
+                y: -40,
+                id: this.id,
+                angle: 0,
+                vx: 0,
+                vy: 0,
+                scalex: 0.5,
+                scaley: 0.5,
+                name: this.hero.weapon.name
             }
         }
     }
