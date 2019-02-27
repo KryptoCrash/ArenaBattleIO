@@ -10,6 +10,6 @@ Victory!
 
 Very simple game mechanics, and beautiful HD graphics that will forsure suit your tastes.
 
-If you don't like it, Make an issue! Tell us why you didn't like it! Be specific!
+If you don't like it, make an issue! Tell us why you didn't like it! Be specific!
 
 Thank you!
