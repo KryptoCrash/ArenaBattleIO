@@ -76,3 +76,14 @@ module.exports = class Server {
         this.io.emit(type, gameObj);
     }
 };
+
+/*
+Our server starts up, and does "setGameTime" to update the players. This is our "tick" function.
+Everybody should have "around" the same FPS. That means if someone is having a slow fps, it's either the client's internet,
+or everybody's having a bad day.
+
+Once a player connects, we update EVERYBODY (this should include them as well) of the list of new players.
+We'll also update them if somebody leaves, dies, or respawns.
+In this update, each client should recieve information about that character's class, and other things that are required.
+(Honestly, )
+*/
