@@ -9,5 +9,8 @@ module.exports = class Archer {
             range: 1000,
             name: "arrow"
         };
+        this.weapon = {
+            name: 'archerBow'
+        }
     }
 };

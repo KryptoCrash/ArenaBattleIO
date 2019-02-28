@@ -11,7 +11,7 @@ module.exports = class Server {
     }
     init() {
         this.io.on("connect", socket => {
-            this.addPlayer(socket.id, heroHandler("scout"));
+            this.addPlayer(socket.id, heroHandler(socket.handshake.query.hero));
             this.io.emit("newPlayer", this.players[socket.id]);
             this.runSocket(socket);
         });

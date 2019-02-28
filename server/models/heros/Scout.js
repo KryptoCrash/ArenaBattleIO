@@ -8,5 +8,8 @@ module.exports = class Scout {
             range: 500,
             name: "dagger"
         };
+        this.weapon = {
+            name: 'dagger'
+        }
     }
 };
