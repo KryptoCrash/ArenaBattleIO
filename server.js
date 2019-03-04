@@ -5,15 +5,16 @@ var io = require('socket.io').listen(server);
 var Server = require('./server/models/server/server');
 var Bundler = require('parcel-bundler');
 var path = require('path');
+var port = 8000;
 
-app.get('/', (req,res) => {
-    res.sendFile(__dirname+'/client/index.html')
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/client/index.html')
 })
-app.use('/client',express.static(__dirname+'/client'));
+app.use('/client', express.static(__dirname+'/client'));
 
-server.listen(8000, () => {
-    console.log(`App now listening on port 8000`);
+server.listen(port, () => {
+    console.log(`App now listening on port ${port}`);
     
 });
 var socketserver = new Server(io);
-socketserver.init()
+socketserver.init();
